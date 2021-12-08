@@ -1,6 +1,7 @@
 import M "mo:matchers/Matchers";
 import Library "../src/Library";
-import Field "../src/core/field";
+import field "../src/core/field";
+import group "../src/core/group";
 import S "mo:matchers/Suite";
 import T "mo:matchers/Testable";
 

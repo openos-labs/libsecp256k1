@@ -32,49 +32,6 @@ module {
             ret
         };
 
-        public func new_raw(
-            d9: Nat32,
-            d8: Nat32,
-            d7: Nat32,
-            d6: Nat32,
-            d5: Nat32,
-            d4: Nat32,
-            d3: Nat32,
-            d2: Nat32,
-            d1: Nat32,
-            d0: Nat32,
-        ) {
-            n := [var d0, d1, d2, d3, d4, d5, d6, d7, d8, d9];
-            magnitude := 1;
-            normalized := false;
-        };
-
-        public func new(
-            d7: Nat32,
-            d6: Nat32,
-            d5: Nat32,
-            d4: Nat32,
-            d3: Nat32,
-            d2: Nat32,
-            d1: Nat32,
-            d0: Nat32,            
-        ) {
-            n := [var
-                d0 & 0x3ffffff,
-                (d0 >> 26) | ((d1 & 0xfffff) << 6),
-                (d1 >> 20) | ((d2 & 0x3fff) << 12),
-                (d2 >> 14) | ((d3 & 0xff) << 18),
-                (d3 >> 8) | ((d4 & 0x3) << 24),
-                (d4 >> 2) & 0x3ffffff,
-                (d4 >> 28) | ((d5 & 0x3fffff) << 4),
-                (d5 >> 22) | ((d6 & 0xffff) << 10),
-                (d6 >> 16) | ((d7 & 0x3ff) << 16),
-                (d7 >> 10),
-            ];
-            magnitude := 1;
-            normalized := true;
-        };
-
         public func from_int(a: Nat32): Field {
             let f = Field();
             f.set_int(a);
@@ -2105,23 +2062,63 @@ module {
 
     };
 
+    public func new_raw(
+        d9: Nat32,
+        d8: Nat32,
+        d7: Nat32,
+        d6: Nat32,
+        d5: Nat32,
+        d4: Nat32,
+        d3: Nat32,
+        d2: Nat32,
+        d1: Nat32,
+        d0: Nat32,
+    ): Field {
+        let ret = Field();
+        ret.n := [var d0, d1, d2, d3, d4, d5, d6, d7, d8, d9];
+        ret.magnitude := 1;
+        ret.normalized := false;
+        ret
+    };
+
+    public func new(
+        d7: Nat32,
+        d6: Nat32,
+        d5: Nat32,
+        d4: Nat32,
+        d3: Nat32,
+        d2: Nat32,
+        d1: Nat32,
+        d0: Nat32,            
+    ): Field {
+        let ret = Field();
+        ret.n := [var
+            d0 & 0x3ffffff,
+            (d0 >> 26) | ((d1 & 0xfffff) << 6),
+            (d1 >> 20) | ((d2 & 0x3fff) << 12),
+            (d2 >> 14) | ((d3 & 0xff) << 18),
+            (d3 >> 8) | ((d4 & 0x3) << 24),
+            (d4 >> 2) & 0x3ffffff,
+            (d4 >> 28) | ((d5 & 0x3fffff) << 4),
+            (d5 >> 22) | ((d6 & 0xffff) << 10),
+            (d6 >> 16) | ((d7 & 0x3ff) << 16),
+            (d7 >> 10),
+        ];
+        ret.magnitude := 1;
+        ret.normalized := true;
+        ret
+    };
+
+    public func assign(ret: Field, a: Field) {
+        ret.n := a.n;
+        ret.magnitude := a.magnitude;
+        ret.normalized := a.normalized;
+    };
+
     /// Compact field element storage.
     public class FieldStorage() {
         public var n: [var Nat32] = Array.init<Nat32>(8, 0);
         public let len: Nat = 8;
-
-        public func new(
-            d7: Nat32,
-            d6: Nat32,
-            d5: Nat32,
-            d4: Nat32,
-            d3: Nat32,
-            d2: Nat32,
-            d1: Nat32,
-            d0: Nat32,
-        ) {
-            n := [var d0, d1, d2, d3, d4, d5, d6, d7];
-        };
 
         public func cmov(other: FieldStorage, flag: Bool) {
             n[0] := if flag { other.n[0] } else { n[0] };
@@ -2152,5 +2149,20 @@ module {
 
             r
         };
+    };
+
+    public func new_fs(
+        d7: Nat32,
+        d6: Nat32,
+        d5: Nat32,
+        d4: Nat32,
+        d3: Nat32,
+        d2: Nat32,
+        d1: Nat32,
+        d0: Nat32,
+    ): FieldStorage {
+        let ret = FieldStorage();
+        ret.n := [var d0, d1, d2, d3, d4, d5, d6, d7];
+        ret
     };
 };
