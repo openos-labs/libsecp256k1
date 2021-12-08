@@ -1,3 +1,5 @@
+import Option "mo:base/Option";
+
 import field "./field";
 
 module {
@@ -151,7 +153,7 @@ module {
     public func set_table_gej_var(r: [Affine], a: [Jacobian], zr: [Field]) {
         assert(r.size() == a.size());
 
-        var i = r.size() - 1;
+        var i: Nat = r.size() - 1;
         var zi: Field = field.Field();
 
         if (r.size() != 0) {
@@ -170,7 +172,7 @@ module {
     public func globalz_set_table_gej(r: [Affine], globalz: Field, a: [Jacobian], zr: [Field]) {
         assert(r.size() == a.size() and a.size() == zr.size());
 
-        var i = r.size() - 1;
+        var i: Nat = r.size() - 1;
         var zs: Field = field.Field();
 
         if (r.size() != 0) {
@@ -181,7 +183,8 @@ module {
             zs := zr[i];
 
             while (i > 0) {
-                if (i != r.size() - 1) {
+                let temp: Nat = r.size() - 1;
+                if (i != temp) {
                     zs := zs.mul(zr[i]);
                 };
                 i -= 1;
@@ -204,6 +207,13 @@ module {
             ret.z := z;
             ret.infinity := infinity;
             ret
+        };
+
+        public func assign_mut(a: Jacobian) {
+            x := a.x;
+            y := a.y;
+            z := a.z;
+            infinity := a.infinity;
         };
 
         /// Set a group element (jacobian) equal to the point at infinity.
@@ -311,6 +321,75 @@ module {
             t2 := t4.neg(2);
             y := y.add(t2);
         };
+
+        public func double_var(rzr: ?Field): Jacobian {
+            let ret = Jacobian();
+            ret.double_var_in_place(self(), rzr);
+            ret
+        };
+
+        /// Set r equal to the sum of a and b. If rzr is non-NULL, r->z =
+        /// a->z * *rzr (a cannot be infinity in that case).
+        public func add_var_in_place(a: Jacobian, b: Jacobian, rzr: ?Field) {
+            if (a.is_infinity()) {
+                assert(Option.isNull(rzr));
+                assign_mut(b);
+                return;
+            };
+            if (b.is_infinity()) {
+                ignore do? {
+                    rzr!.set_int(1);
+                };
+                assign_mut(a);
+                return;
+            };
+
+            infinity := false;
+            let z22 = b.z.sqr();
+            let z12 = a.z.sqr();
+            let u1 = a.x.mul(z22);
+            let u2 = b.x.mul(z12);
+            var s1 = a.y.mul(z22);
+            s1 := s1.mul(b.z);
+            var s2 = b.y.mul(z12);
+            s2 := s2.mul(a.z);
+            var h = u1.neg(1);
+            h := h.add(u2);
+            var i = s1.neg(1);
+            i := i.add(s2);
+            if (h.normalizes_to_zero_var()) {
+                if (i.normalizes_to_zero_var()) {
+                    double_var_in_place(a, rzr);
+                } else {
+                    ignore do? {
+                        rzr!.set_int(0);
+                    };
+                    infinity := true;
+                };
+                return;
+            };
+            let i2 = i.sqr();
+            let h2 = h.sqr();
+            var h3 = h.add(h2);
+            h := h.mul(b.z);
+            ignore do? {
+                rzr!.assign_mut(h);
+            };
+            z := a.z.mul(h);
+            let t = u1.mul(h2);
+            x := t;
+            x.mul_int(2);
+            x := x.add(h3);
+            x := x.neg(3);
+            x := x.add(i2);
+            y := x.neg(5);
+            y := y.add(t);
+            y := y.mul(i);
+            h3 := h3.mul(s1);
+            h3 := h3.neg(1);
+            y := y.add(h3);
+        }
+
 
 
     };

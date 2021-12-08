@@ -32,6 +32,12 @@ module {
             ret
         };
 
+        public func assign_mut(a: Field) {
+            n := a.n;
+            magnitude := a.magnitude;
+            normalized := a.normalized;
+        };
+
         public func from_int(a: Nat32): Field {
             let f = Field();
             f.set_int(a);
@@ -2022,9 +2028,7 @@ module {
             let ret = Field();
             let _self = self();
             ret.mul_in_place(_self, other);
-            n := ret.n;
-            magnitude := ret.magnitude;
-            normalized := ret.normalized;
+            assign_mut(ret)
         };
 
         // PartialEq
