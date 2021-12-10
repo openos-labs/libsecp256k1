@@ -33,7 +33,16 @@ module {
         };
 
         public func assign_mut(a: Field) {
-            n := a.n;
+            n[0] := a.n[0];
+            n[1] := a.n[1];
+            n[2] := a.n[2];
+            n[3] := a.n[3];
+            n[4] := a.n[4];
+            n[5] := a.n[5];
+            n[6] := a.n[6];
+            n[7] := a.n[7];
+            n[8] := a.n[8];
+            n[9] := a.n[9];
             magnitude := a.magnitude;
             normalized := a.normalized;
         };
@@ -155,7 +164,17 @@ module {
 
             assert(t9 >> 22 == x);
 
-            n := [var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9];
+            n[0] := t0;
+            n[1] := t1;
+            n[2] := t2;
+            n[3] := t3;
+            n[4] := t4;
+            n[5] := t5;
+            n[6] := t6;
+            n[7] := t7;
+            n[8] := t8;
+            n[9] := t9;
+
             magnitude := 1;
             normalized := true;
             assert(verify());
@@ -201,7 +220,16 @@ module {
 
             assert(t9 >> 23 == 0);
 
-            n := [var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9];
+            n[0] := t0;
+            n[1] := t1;
+            n[2] := t2;
+            n[3] := t3;
+            n[4] := t4;
+            n[5] := t5;
+            n[6] := t6;
+            n[7] := t7;
+            n[8] := t8;
+            n[9] := t9;
             magnitude := 1;
             assert(verify());
         };
@@ -289,7 +317,16 @@ module {
                 t9 &= 0x03fffff;
             };
 
-            n := [var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9];
+            n[0] := t0;
+            n[1] := t1;
+            n[2] := t2;
+            n[3] := t3;
+            n[4] := t4;
+            n[5] := t5;
+            n[6] := t6;
+            n[7] := t7;
+            n[8] := t8;
+            n[9] := t9;
             magnitude := 1;
             normalized := true;
             assert(verify());            
@@ -451,7 +488,16 @@ module {
         /// Set a field element equal to a small integer. Resulting field
         /// element is normalized.
         public func set_int(a: Nat32) {
-            n := [var a, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            n[0] := a;
+            n[1] := 0;
+            n[2] := 0;
+            n[3] := 0;
+            n[4] := 0;
+            n[5] := 0;
+            n[6] := 0;
+            n[7] := 0;
+            n[8] := 0;
+            n[9] := 0;
             magnitude := 1;
             normalized := true;
             assert(verify());
@@ -487,7 +533,16 @@ module {
         public func clear() {
             magnitude := 0;
             normalized := true;
-            n := [var 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            n[0] := 0;
+            n[1] := 0;
+            n[2] := 0;
+            n[3] := 0;
+            n[4] := 0;
+            n[5] := 0;
+            n[6] := 0;
+            n[7] := 0;
+            n[8] := 0;
+            n[9] := 0;
         };
 
         /// Set a field element equal to 32-byte big endian value. If
@@ -2079,7 +2134,16 @@ module {
         d0: Nat32,
     ): Field {
         let ret = Field();
-        ret.n := [var d0, d1, d2, d3, d4, d5, d6, d7, d8, d9];
+        ret.n[0] := d0;
+        ret.n[1] := d1;
+        ret.n[2] := d2;
+        ret.n[3] := d3;
+        ret.n[4] := d4;
+        ret.n[5] := d5;
+        ret.n[6] := d6;
+        ret.n[7] := d7;
+        ret.n[8] := d8;
+        ret.n[9] := d9;
         ret.magnitude := 1;
         ret.normalized := false;
         ret
@@ -2096,25 +2160,32 @@ module {
         d0: Nat32,            
     ): Field {
         let ret = Field();
-        ret.n := [var
-            d0 & 0x3ffffff,
-            (d0 >> 26) | ((d1 & 0xfffff) << 6),
-            (d1 >> 20) | ((d2 & 0x3fff) << 12),
-            (d2 >> 14) | ((d3 & 0xff) << 18),
-            (d3 >> 8) | ((d4 & 0x3) << 24),
-            (d4 >> 2) & 0x3ffffff,
-            (d4 >> 28) | ((d5 & 0x3fffff) << 4),
-            (d5 >> 22) | ((d6 & 0xffff) << 10),
-            (d6 >> 16) | ((d7 & 0x3ff) << 16),
-            (d7 >> 10),
-        ];
+        ret.n[0] := d0 & 0x3ffffff;
+        ret.n[1] := (d0 >> 26) | ((d1 & 0xfffff) << 6);
+        ret.n[2] := (d1 >> 20) | ((d2 & 0x3fff) << 12);
+        ret.n[3] := (d2 >> 14) | ((d3 & 0xff) << 18);
+        ret.n[4] := (d3 >> 8) | ((d4 & 0x3) << 24);
+        ret.n[5] := (d4 >> 2) & 0x3ffffff;
+        ret.n[6] := (d4 >> 28) | ((d5 & 0x3fffff) << 4);
+        ret.n[7] := (d5 >> 22) | ((d6 & 0xffff) << 10);
+        ret.n[8] := (d6 >> 16) | ((d7 & 0x3ff) << 16);
+        ret.n[9] := (d7 >> 10);
         ret.magnitude := 1;
         ret.normalized := true;
         ret
     };
 
     public func assign(ret: Field, a: Field) {
-        ret.n := a.n;
+        ret.n[0] := a.n[0];
+        ret.n[1] := a.n[1];
+        ret.n[2] := a.n[2];
+        ret.n[3] := a.n[3];
+        ret.n[4] := a.n[4];
+        ret.n[5] := a.n[5];
+        ret.n[6] := a.n[6];
+        ret.n[7] := a.n[7];
+        ret.n[8] := a.n[8];
+        ret.n[9] := a.n[9];
         ret.magnitude := a.magnitude;
         ret.normalized := a.normalized;
     };
@@ -2166,7 +2237,14 @@ module {
         d0: Nat32,
     ): FieldStorage {
         let ret = FieldStorage();
-        ret.n := [var d0, d1, d2, d3, d4, d5, d6, d7];
+        ret.n[0] := d0;
+        ret.n[1] := d1;
+        ret.n[2] := d2;
+        ret.n[3] := d3;
+        ret.n[4] := d4;
+        ret.n[5] := d5;
+        ret.n[6] := d6;
+        ret.n[7] := d7;
         ret
     };
 };
