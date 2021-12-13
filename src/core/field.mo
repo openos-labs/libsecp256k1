@@ -20,13 +20,22 @@ module {
         /// where p = 2^256 - 0x1000003D1
         ///
         /// The least signifiant byte is in the front.
-        public var n: [var Nat32] = Array.init<Nat32>(10, 0);
+        public let n: [var Nat32] = Array.init<Nat32>(10, 0);
         public var magnitude: Nat32 = 0;
         public var normalized: Bool = true;
 
         public func self(): Field {
             let ret = Field();
-            ret.n := n;
+            ret.n[0] := n[0];
+            ret.n[1] := n[1];
+            ret.n[2] := n[2];
+            ret.n[3] := n[3];
+            ret.n[4] := n[4];
+            ret.n[5] := n[5];
+            ret.n[6] := n[6];
+            ret.n[7] := n[7];
+            ret.n[8] := n[8];
+            ret.n[9] := n[9];
             ret.magnitude := magnitude;
             ret.normalized := normalized;
             ret

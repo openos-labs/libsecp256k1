@@ -19,4 +19,16 @@ module {
     public func u64u32(a: Nat64): Nat32 {
         Nat32.fromNat(Nat64.toNat(a));
     };
+
+    public func u8u64(a: Nat8): Nat64 {
+        Nat64.fromNat(Nat8.toNat(a))
+    };
+
+    public func boolu8(b: Bool): Nat8 {
+        if b { 1 } else { 0 };
+    };
+
+    public func boolu64(b: Bool): Nat64 {
+        if b { 1 } else { 0 };
+    };
 };
