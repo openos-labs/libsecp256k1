@@ -4,7 +4,7 @@ Pure Motoko Implementation of secp256k1.
 
 ## API Documentation
 
-https://flyq.github.io/libsecp256k1
+https://mix-labs.github.io/libsecp256k1
 
 ## Reference
 
