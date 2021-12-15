@@ -31,4 +31,8 @@ module {
     public func boolu64(b: Bool): Nat64 {
         if b { 1 } else { 0 };
     };
+
+    public func boolu32(b: Bool): Nat32 {
+        if b { 1 } else { 0 };
+    };
 };

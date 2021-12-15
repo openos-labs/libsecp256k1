@@ -15,6 +15,7 @@ module {
     let u8u64 = Utils.u8u64;
     let u64u32 = Utils.u64u32;
     let boolu8 = Utils.boolu8;
+    let boolu32 = Utils.boolu32;
     let boolu64 = Utils.boolu64;
 
     let MaxU32: Nat32 = 0xffff_ffff;
@@ -342,7 +343,294 @@ module {
             let _ = t;
         };
 
+        func reduce_512(l: [Nat32]) {
+            var c0: Nat32 = 0;
+            var c1: Nat32 = 0;
+            var c2: Nat32 = 0;
+
+            var c: Nat64 = 0;
+            let (n0, n1, n2, n3, n4, n5, n6, n7) =
+                (l[8], l[9], l[10], l[11], l[12], l[13], l[14], l[15]);
+            var m0: Nat32 = 0;
+            var m1: Nat32 = 0;
+            var m2: Nat32 = 0;
+            var m3: Nat32 = 0;
+            var m4: Nat32 = 0;            
+            var m5: Nat32 = 0;
+            var m6: Nat32 = 0;
+            var m7: Nat32 = 0;
+            var m8: Nat32 = 0;
+            var m9: Nat32 = 0;
+            var m10: Nat32 = 0;
+            var m11: Nat32 = 0;
+            var m12: Nat32 = 0;
+
+            var p0: Nat32 = 0;
+            var p1: Nat32 = 0;
+            var p2: Nat32 = 0;
+            var p3: Nat32 = 0;
+            var p4: Nat32 = 0;
+            var p5: Nat32 = 0;
+            var p6: Nat32 = 0;
+            var p7: Nat32 = 0;
+            var p8: Nat32 = 0;
+
+            c0 := l[0];
+            c1 := 0;
+            c2 := 0;
+            let (ta0, ta1, ta2) = muladd_fast(c0, c1, c2, n0, SECP256K1_N_C_0);
+            c0 := ta0;
+            c1 := ta1;
+            c2 := ta2;
+
+            let (tb0, tb1, tb2, nm0) = extract_fast(c0, c1, c2);
+            c0 := tb0;
+            c1 := tb1;
+            c2 := tb2;
+            m0 := nm0;
+
+            let (tc0, tc1, tc2) = muladd_fast(c0, c1, c2, n0, SECP256K1_N_C_0);
+            c0 := tc0;
+            c1 := tc1;
+            c2 := tc2;
+
+            // sumadd_fast!(l[1]);
+            // muladd!(n1, SECP256K1_N_C_0);
+            // muladd!(n0, SECP256K1_N_C_1);
+            // m1 = extract!();
+            // sumadd!(l[2]);
+            // muladd!(n2, SECP256K1_N_C_0);
+            // muladd!(n1, SECP256K1_N_C_1);
+            // muladd!(n0, SECP256K1_N_C_2);
+            // m2 = extract!();
+            // sumadd!(l[3]);
+            // muladd!(n3, SECP256K1_N_C_0);
+            // muladd!(n2, SECP256K1_N_C_1);
+            // muladd!(n1, SECP256K1_N_C_2);
+            // muladd!(n0, SECP256K1_N_C_3);
+            // m3 = extract!();
+            // sumadd!(l[4]);
+            // muladd!(n4, SECP256K1_N_C_0);
+            // muladd!(n3, SECP256K1_N_C_1);
+            // muladd!(n2, SECP256K1_N_C_2);
+            // muladd!(n1, SECP256K1_N_C_3);
+            // sumadd!(n0);
+            // m4 = extract!();
+            // sumadd!(l[5]);
+            // muladd!(n5, SECP256K1_N_C_0);
+            // muladd!(n4, SECP256K1_N_C_1);
+            // muladd!(n3, SECP256K1_N_C_2);
+            // muladd!(n2, SECP256K1_N_C_3);
+            // sumadd!(n1);
+            // m5 = extract!();
+            // sumadd!(l[6]);
+            // muladd!(n6, SECP256K1_N_C_0);
+            // muladd!(n5, SECP256K1_N_C_1);
+            // muladd!(n4, SECP256K1_N_C_2);
+            // muladd!(n3, SECP256K1_N_C_3);
+            // sumadd!(n2);
+            // m6 = extract!();
+            // sumadd!(l[7]);
+            // muladd!(n7, SECP256K1_N_C_0);
+            // muladd!(n6, SECP256K1_N_C_1);
+            // muladd!(n5, SECP256K1_N_C_2);
+            // muladd!(n4, SECP256K1_N_C_3);
+            // sumadd!(n3);
+            // m7 = extract!();
+            // muladd!(n7, SECP256K1_N_C_1);
+            // muladd!(n6, SECP256K1_N_C_2);
+            // muladd!(n5, SECP256K1_N_C_3);
+            // sumadd!(n4);
+            // m8 = extract!();
+            // muladd!(n7, SECP256K1_N_C_2);
+            // muladd!(n6, SECP256K1_N_C_3);
+            // sumadd!(n5);
+            // m9 = extract!();
+            // muladd!(n7, SECP256K1_N_C_3);
+            // sumadd!(n6);
+            // m10 = extract!();
+            // sumadd_fast!(n7);
+            // m11 = extract_fast!();
+            // debug_assert!(c0 <= 1);
+            // m12 = c0;
+
+            // /* Reduce 385 bits into 258. */
+            // /* p[0..8] = m[0..7] + m[8..12] * SECP256K1_N_C. */
+            // c0 = m0;
+            // c1 = 0;
+            // c2 = 0;
+            // muladd_fast!(m8, SECP256K1_N_C_0);
+            // p0 = extract_fast!();
+            // sumadd_fast!(m1);
+            // muladd!(m9, SECP256K1_N_C_0);
+            // muladd!(m8, SECP256K1_N_C_1);
+            // p1 = extract!();
+            // sumadd!(m2);
+            // muladd!(m10, SECP256K1_N_C_0);
+            // muladd!(m9, SECP256K1_N_C_1);
+            // muladd!(m8, SECP256K1_N_C_2);
+            // p2 = extract!();
+            // sumadd!(m3);
+            // muladd!(m11, SECP256K1_N_C_0);
+            // muladd!(m10, SECP256K1_N_C_1);
+            // muladd!(m9, SECP256K1_N_C_2);
+            // muladd!(m8, SECP256K1_N_C_3);
+            // p3 = extract!();
+            // sumadd!(m4);
+            // muladd!(m12, SECP256K1_N_C_0);
+            // muladd!(m11, SECP256K1_N_C_1);
+            // muladd!(m10, SECP256K1_N_C_2);
+            // muladd!(m9, SECP256K1_N_C_3);
+            // sumadd!(m8);
+            // p4 = extract!();
+            // sumadd!(m5);
+            // muladd!(m12, SECP256K1_N_C_1);
+            // muladd!(m11, SECP256K1_N_C_2);
+            // muladd!(m10, SECP256K1_N_C_3);
+            // sumadd!(m9);
+            // p5 = extract!();
+            // sumadd!(m6);
+            // muladd!(m12, SECP256K1_N_C_2);
+            // muladd!(m11, SECP256K1_N_C_3);
+            // sumadd!(m10);
+            // p6 = extract!();
+            // sumadd_fast!(m7);
+            // muladd_fast!(m12, SECP256K1_N_C_3);
+            // sumadd_fast!(m11);
+            // p7 = extract_fast!();
+            // p8 = c0 + m12;
+            // debug_assert!(p8 <= 2);
+
+            // /* Reduce 258 bits into 256. */
+            // /* r[0..7] = p[0..7] + p[8] * SECP256K1_N_C. */
+            // c = u64(p0) + u64(SECP256K1_N_C_0) * u64(p8);
+            // self.0[0] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p1) + u64(SECP256K1_N_C_1) * u64(p8);
+            // self.0[1] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p2) + u64(SECP256K1_N_C_2) * u64(p8);
+            // self.0[2] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p3) + u64(SECP256K1_N_C_3) * u64(p8);
+            // self.0[3] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p4) + u64(p8);
+            // self.0[4] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p5);
+            // self.0[5] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p6);
+            // self.0[6] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+            // c += u64(p7);
+            // self.0[7] = u64u32(c & 0xFFFFFFFF);
+            // c >>= 32;
+
+            // let overflow = self.check_overflow();
+            // self.reduce(Choice::from(c as u8) | overflow);
+        };
+
     };
+
+    public func muladd(c0: Nat32, c1: Nat32, c2: Nat32, a: Nat32, b: Nat32): (Nat32, Nat32, Nat32) {
+        var c3 = c0;
+        var c4 = c1;
+        var c5 = c2;
+
+        let t = u64(a) * u64(b);
+        var th: Nat32 = u64u32(t >> 32);
+        let tl = u64u32(t);
+        c3 := Nat32.addWrap(c3, tl);
+        th := Nat32.addWrap(th, Utils.boolu32(c3 < tl));
+        c4 := Nat32.addWrap(c4, th);
+        c5 := Nat32.addWrap(c5, Utils.boolu32(c4 < th));
+        assert(c4 >= th or c5 != 0);
+        (c3, c4, c5)
+    };
+
+    public func muladd_fast(c0: Nat32, c1: Nat32, c2: Nat32, a: Nat32, b: Nat32): (Nat32, Nat32, Nat32) {
+        var c3 = c0;
+        var c4 = c1;
+        var c5 = c2;
+
+        let t = u64(a) * u64(b);
+        var th: Nat32 = u64u32(t >> 32);
+        let tl = u64u32(t);
+        c3 := Nat32.addWrap(c3, tl);
+        th := Nat32.addWrap(th, Utils.boolu32(c3 < tl));
+        c4 := Nat32.addWrap(c4, th);
+        assert(c4 >= th);
+        (c3, c4, c5)
+    };
+
+    public func muladd2(c0: Nat32, c1: Nat32, c2: Nat32, a: Nat32, b: Nat32): (Nat32, Nat32, Nat32) {
+        var c3 = c0;
+        var c4 = c1;
+        var c5 = c2;
+
+        let t = u64(a) * u64(b);
+        let th: Nat32 = u64u32(t >> 32);
+        let tl = u64u32(t);
+        var th2 = Nat32.addWrap(th, th);
+        c5 := Nat32.addWrap(c5, Utils.boolu32(th2 < th));
+        assert(th2 >= th or c5 != 0);
+        let tl2 = Nat32.addWrap(tl, tl);
+        th2 := Nat32.addWrap(th2, Utils.boolu32(tl2 < tl));
+        c3 := Nat32.addWrap(c3, tl2);
+        th2 := Nat32.addWrap(th2, Utils.boolu32(c3 < tl2));
+        c5 := Nat32.addWrap(c5, Utils.boolu32(c3 < tl2 and th2 == 0 ));
+        assert(c3 >= tl2 or th2 != 0 or c5 != 0);
+
+        c4 := Nat32.addWrap(c4, th2);
+        c5 := Nat32.addWrap(c5, Utils.boolu32(c4 < th2));
+        assert(c4 >= th2 or c5 != 0);
+        (c3, c4, c5)
+    };
+
+
+    public func sumadd(c0: Nat32, c1: Nat32, c2: Nat32, a: Nat32): (Nat32, Nat32, Nat32) {
+        var c3 = c0;
+        var c4 = c1;
+        var c5 = c2;
+
+        c3 := Nat32.addWrap(c3, a);
+        let over = Utils.boolu32(c3 < a);
+        c4 := Nat32.addWrap(c4, over);
+        c5 := Nat32.addWrap(c5, Utils.boolu32(c4 < over));
+        (c3, c4, c5)
+    };
+
+    public func sumadd_fast(c0: Nat32, c1: Nat32, c2: Nat32, a: Nat32): (Nat32, Nat32, Nat32) {
+        var c3 = c0;
+        var c4 = c1;
+        var c5 = c2;
+
+        c3 := Nat32.addWrap(c3, a);
+        c4 := Nat32.addWrap(c4, Utils.boolu32(c3 < a));
+        assert(c4 != 0 or c3 >= a);
+        assert(c5 == 0);
+        (c3, c4, c5)
+    };
+
+    public func extract(c0: Nat32, c1: Nat32, c2: Nat32): (Nat32, Nat32, Nat32, Nat32) {
+        let n = c0;
+        let ta0 = c1;
+        let ta1 = c2;
+        let ta2: Nat32 = 0;
+        (ta0, ta1, ta2, n)
+    };
+
+    public func extract_fast(c0: Nat32, c1: Nat32, c2: Nat32): (Nat32, Nat32, Nat32, Nat32) {
+        let n = c0;
+        let ta0 = c1;
+        let ta1: Nat32 = 0;
+        assert(c2 == 0);
+        (ta0, ta1, c2, n)
+    };
+
+    
 
     /// Create a scalar from an unsigned integer.
     public func from_int(v: Nat32): Scalar {
