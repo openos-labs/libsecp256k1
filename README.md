@@ -2,6 +2,12 @@
 
 Pure Motoko Implementation of secp256k1.
 
+## Process
+
+60%
+
+The full functionality of this library is being implemented.
+
 ## API Documentation
 
 https://mix-labs.github.io/libsecp256k1
