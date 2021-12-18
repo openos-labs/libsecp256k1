@@ -14,6 +14,7 @@ module {
     let u64 = Utils.u64;
     let u8u64 = Utils.u8u64;
     let u64u32 = Utils.u64u32;
+    let u64u8 = Utils.u64u8;
     let boolu8 = Utils.boolu8;
     let boolu32 = Utils.boolu32;
     let boolu64 = Utils.boolu64;
@@ -394,142 +395,552 @@ module {
             c1 := tc1;
             c2 := tc2;
 
-            // sumadd_fast!(l[1]);
-            // muladd!(n1, SECP256K1_N_C_0);
-            // muladd!(n0, SECP256K1_N_C_1);
-            // m1 = extract!();
-            // sumadd!(l[2]);
-            // muladd!(n2, SECP256K1_N_C_0);
-            // muladd!(n1, SECP256K1_N_C_1);
-            // muladd!(n0, SECP256K1_N_C_2);
-            // m2 = extract!();
-            // sumadd!(l[3]);
-            // muladd!(n3, SECP256K1_N_C_0);
-            // muladd!(n2, SECP256K1_N_C_1);
-            // muladd!(n1, SECP256K1_N_C_2);
-            // muladd!(n0, SECP256K1_N_C_3);
-            // m3 = extract!();
-            // sumadd!(l[4]);
-            // muladd!(n4, SECP256K1_N_C_0);
-            // muladd!(n3, SECP256K1_N_C_1);
-            // muladd!(n2, SECP256K1_N_C_2);
-            // muladd!(n1, SECP256K1_N_C_3);
-            // sumadd!(n0);
-            // m4 = extract!();
-            // sumadd!(l[5]);
-            // muladd!(n5, SECP256K1_N_C_0);
-            // muladd!(n4, SECP256K1_N_C_1);
-            // muladd!(n3, SECP256K1_N_C_2);
-            // muladd!(n2, SECP256K1_N_C_3);
-            // sumadd!(n1);
-            // m5 = extract!();
-            // sumadd!(l[6]);
-            // muladd!(n6, SECP256K1_N_C_0);
-            // muladd!(n5, SECP256K1_N_C_1);
-            // muladd!(n4, SECP256K1_N_C_2);
-            // muladd!(n3, SECP256K1_N_C_3);
-            // sumadd!(n2);
-            // m6 = extract!();
-            // sumadd!(l[7]);
-            // muladd!(n7, SECP256K1_N_C_0);
-            // muladd!(n6, SECP256K1_N_C_1);
-            // muladd!(n5, SECP256K1_N_C_2);
-            // muladd!(n4, SECP256K1_N_C_3);
-            // sumadd!(n3);
-            // m7 = extract!();
-            // muladd!(n7, SECP256K1_N_C_1);
-            // muladd!(n6, SECP256K1_N_C_2);
-            // muladd!(n5, SECP256K1_N_C_3);
-            // sumadd!(n4);
-            // m8 = extract!();
-            // muladd!(n7, SECP256K1_N_C_2);
-            // muladd!(n6, SECP256K1_N_C_3);
-            // sumadd!(n5);
-            // m9 = extract!();
-            // muladd!(n7, SECP256K1_N_C_3);
-            // sumadd!(n6);
-            // m10 = extract!();
-            // sumadd_fast!(n7);
-            // m11 = extract_fast!();
-            // debug_assert!(c0 <= 1);
-            // m12 = c0;
+            let (td0, td1, td2) = sumadd_fast(c0, c1, c2, l[1]);
+            c0 := td0;
+            c1 := td1;
+            c2 := td2;
 
-            // /* Reduce 385 bits into 258. */
-            // /* p[0..8] = m[0..7] + m[8..12] * SECP256K1_N_C. */
-            // c0 = m0;
-            // c1 = 0;
-            // c2 = 0;
-            // muladd_fast!(m8, SECP256K1_N_C_0);
-            // p0 = extract_fast!();
-            // sumadd_fast!(m1);
-            // muladd!(m9, SECP256K1_N_C_0);
-            // muladd!(m8, SECP256K1_N_C_1);
-            // p1 = extract!();
-            // sumadd!(m2);
-            // muladd!(m10, SECP256K1_N_C_0);
-            // muladd!(m9, SECP256K1_N_C_1);
-            // muladd!(m8, SECP256K1_N_C_2);
-            // p2 = extract!();
-            // sumadd!(m3);
-            // muladd!(m11, SECP256K1_N_C_0);
-            // muladd!(m10, SECP256K1_N_C_1);
-            // muladd!(m9, SECP256K1_N_C_2);
-            // muladd!(m8, SECP256K1_N_C_3);
-            // p3 = extract!();
-            // sumadd!(m4);
-            // muladd!(m12, SECP256K1_N_C_0);
-            // muladd!(m11, SECP256K1_N_C_1);
-            // muladd!(m10, SECP256K1_N_C_2);
-            // muladd!(m9, SECP256K1_N_C_3);
-            // sumadd!(m8);
-            // p4 = extract!();
-            // sumadd!(m5);
-            // muladd!(m12, SECP256K1_N_C_1);
-            // muladd!(m11, SECP256K1_N_C_2);
-            // muladd!(m10, SECP256K1_N_C_3);
-            // sumadd!(m9);
-            // p5 = extract!();
-            // sumadd!(m6);
-            // muladd!(m12, SECP256K1_N_C_2);
-            // muladd!(m11, SECP256K1_N_C_3);
-            // sumadd!(m10);
-            // p6 = extract!();
-            // sumadd_fast!(m7);
-            // muladd_fast!(m12, SECP256K1_N_C_3);
-            // sumadd_fast!(m11);
-            // p7 = extract_fast!();
-            // p8 = c0 + m12;
-            // debug_assert!(p8 <= 2);
+            let (te0, te1, te2) = muladd(c0, c1, c2, n1, SECP256K1_N_C_0);
+            c0 := te0;
+            c1 := te1;
+            c2 := te2;
 
-            // /* Reduce 258 bits into 256. */
-            // /* r[0..7] = p[0..7] + p[8] * SECP256K1_N_C. */
-            // c = u64(p0) + u64(SECP256K1_N_C_0) * u64(p8);
-            // self.0[0] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p1) + u64(SECP256K1_N_C_1) * u64(p8);
-            // self.0[1] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p2) + u64(SECP256K1_N_C_2) * u64(p8);
-            // self.0[2] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p3) + u64(SECP256K1_N_C_3) * u64(p8);
-            // self.0[3] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p4) + u64(p8);
-            // self.0[4] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p5);
-            // self.0[5] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p6);
-            // self.0[6] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
-            // c += u64(p7);
-            // self.0[7] = u64u32(c & 0xFFFFFFFF);
-            // c >>= 32;
+            let (tf0, tf1, tf2) = muladd(c0, c1, c2, n0, SECP256K1_N_C_1);
+            c0 := tf0;
+            c1 := tf1;
+            c2 := tf2;            
 
-            // let overflow = self.check_overflow();
-            // self.reduce(Choice::from(c as u8) | overflow);
+            let (tg0, tg1, tg2, nm1) = extract(c0, c1, c2);
+            c0 := tg0;
+            c1 := tg1;
+            c2 := tg2;
+            m1 := nm1;
+
+            let (th0, th1, th2) = sumadd(c0, c1, c2, l[2]);
+            c0 := th0;
+            c1 := th1;
+            c2 := th2;
+
+            let (ti0, ti1, ti2) = muladd(c0, c1, c2, n2, SECP256K1_N_C_0);
+            c0 := ti0;
+            c1 := ti1;
+            c2 := ti2;   
+
+            let (tj0, tj1, tj2) = muladd(c0, c1, c2, n1, SECP256K1_N_C_1);
+            c0 := tj0;
+            c1 := tj1;
+            c2 := tj2;
+
+            let (tk0, tk1, tk2) = muladd(c0, c1, c2, n0, SECP256K1_N_C_2);
+            c0 := tk0;
+            c1 := tk1;
+            c2 := tk2;
+
+            let (tl0, tl1, tl2, nm2) = extract(c0, c1, c2);
+            c0 := tl0;
+            c1 := tl1;
+            c2 := tl2;
+            m2 := nm2;
+
+            let (tm0, tm1, tm2) = sumadd(c0, c1, c2, l[3]);
+            c0 := tm0;
+            c1 := tm1;
+            c2 := tm2;
+
+            let (tn0, tn1, tn2) = muladd(c0, c1, c2, n3, SECP256K1_N_C_0);
+            c0 := tn0;
+            c1 := tn1;
+            c2 := tn2;
+
+            let (to0, to1, to2) = muladd(c0, c1, c2, n2, SECP256K1_N_C_1);
+            c0 := to0;
+            c1 := to1;
+            c2 := to2;
+
+            let (tp0, tp1, tp2) = muladd(c0, c1, c2, n1, SECP256K1_N_C_2);
+            c0 := tp0;
+            c1 := tp1;
+            c2 := tp2;
+
+            let (tq0, tq1, tq2) = muladd(c0, c1, c2, n0, SECP256K1_N_C_3);
+            c0 := tq0;
+            c1 := tq1;
+            c2 := tq2;
+
+            let (tr0, tr1, tr2, nm3) = extract(c0, c1, c2);
+            c0 := tr0;
+            c1 := tr1;
+            c2 := tr2;
+            m3 := nm3;
+
+            let (ts0, ts1, ts2) = sumadd(c0, c1, c2, l[4]);
+            c0 := ts0;
+            c1 := ts1;
+            c2 := ts2;
+
+            let (tt0, tt1, tt2) = muladd(c0, c1, c2, n4, SECP256K1_N_C_0);
+            c0 := tt0;
+            c1 := tt1;
+            c2 := tt2;
+
+            let (tu0, tu1, tu2) = muladd(c0, c1, c2, n3, SECP256K1_N_C_1);
+            c0 := tu0;
+            c1 := tu1;
+            c2 := tu2;
+
+            let (tv0, tv1, tv2) = muladd(c0, c1, c2, n2, SECP256K1_N_C_2);
+            c0 := tv0;
+            c1 := tv1;
+            c2 := tv2;
+
+            let (tw0, tw1, tw2) = muladd(c0, c1, c2, n1, SECP256K1_N_C_3);
+            c0 := tw0;
+            c1 := tw1;
+            c2 := tw2;
+
+            let (tx0, tx1, tx2) = sumadd(c0, c1, c2, n0);
+            c0 := tx0;
+            c1 := tx1;
+            c2 := tx2;
+
+            let (ty0, ty1, ty2, nm4) = extract(c0, c1, c2);
+            c0 := ty0;
+            c1 := ty1;
+            c2 := ty2;
+            m4 := nm4;
+
+            let (tz0, tz1, tz2) = sumadd(c0, c1, c2, l[5]);
+            c0 := tz0;
+            c1 := tz1;
+            c2 := tz2;
+
+            let (taa0, taa1, taa2) = muladd(c0, c1, c2, n5, SECP256K1_N_C_0);
+            c0 := taa0;
+            c1 := taa1;
+            c2 := taa2;
+
+            let (tab0, tab1, tab2) = muladd(c0, c1, c2, n4, SECP256K1_N_C_1);
+            c0 := tab0;
+            c1 := tab1;
+            c2 := tab2;
+
+            let (tac0, tac1, tac2) = muladd(c0, c1, c2, n3, SECP256K1_N_C_2);
+            c0 := tac0;
+            c1 := tac1;
+            c2 := tac2;
+
+            let (tad0, tad1, tad2) = muladd(c0, c1, c2, n2, SECP256K1_N_C_3);
+            c0 := tad0;
+            c1 := tad1;
+            c2 := tad2;
+
+            let (tae0, tae1, tae2) = sumadd(c0, c1, c2, n1);
+            c0 := tae0;
+            c1 := tae1;
+            c2 := tae2;
+
+            let (taf0, taf1, taf2, nm5) = extract(c0, c1, c2);
+            c0 := taf0;
+            c1 := taf1;
+            c2 := taf2;
+            m5 := nm5;
+
+            let (tag0, tag1, tag2) = sumadd(c0, c1, c2, l[6]);
+            c0 := tag0;
+            c1 := tag1;
+            c2 := tag2;
+
+            let (tah0, tah1, tah2) = muladd(c0, c1, c2, n6, SECP256K1_N_C_0);
+            c0 := tah0;
+            c1 := tah1;
+            c2 := tah2;
+
+            let (tai0, tai1, tai2) = muladd(c0, c1, c2, n5, SECP256K1_N_C_1);
+            c0 := tai0;
+            c1 := tai1;
+            c2 := tai2;
+
+            let (taj0, taj1, taj2) = muladd(c0, c1, c2, n4, SECP256K1_N_C_2);
+            c0 := taj0;
+            c1 := taj1;
+            c2 := taj2;
+
+            let (tak0, tak1, tak2) = muladd(c0, c1, c2, n3, SECP256K1_N_C_3);
+            c0 := tak0;
+            c1 := tak1;
+            c2 := tak2;
+
+            let (tal0, tal1, tal2) = sumadd(c0, c1, c2, n2);
+            c0 := tal0;
+            c1 := tal1;
+            c2 := tal2;
+            
+            let (tam0, tam1, tam2, nm6) = extract(c0, c1, c2);
+            c0 := tam0;
+            c1 := tam1;
+            c2 := tam2;
+            m6 := nm6;
+
+            let (tan0, tan1, tan2) = sumadd(c0, c1, c2, l[7]);
+            c0 := tan0;
+            c1 := tan1;
+            c2 := tan2;
+
+            let (tao0, tao1, tao2) = muladd(c0, c1, c2, n7, SECP256K1_N_C_0);
+            c0 := tao0;
+            c1 := tao1;
+            c2 := tao2;
+
+            let (tap0, tap1, tap2) = muladd(c0, c1, c2, n6, SECP256K1_N_C_1);
+            c0 := tap0;
+            c1 := tap1;
+            c2 := tap2;
+
+            let (taq0, taq1, taq2) = muladd(c0, c1, c2, n5, SECP256K1_N_C_2);
+            c0 := taq0;
+            c1 := taq1;
+            c2 := taq2;
+
+            let (tar0, tar1, tar2) = muladd(c0, c1, c2, n4, SECP256K1_N_C_3);
+            c0 := tar0;
+            c1 := tar1;
+            c2 := tar2;
+
+            let (tas0, tas1, tas2) = sumadd(c0, c1, c2, n3);
+            c0 := tas0;
+            c1 := tas1;
+            c2 := tas2;
+
+            let (tat0, tat1, tat2, nm7) = extract(c0, c1, c2);
+            c0 := tat0;
+            c1 := tat1;
+            c2 := tat2;
+            m7 := nm7;
+
+            let (tau0, tau1, tau2) = muladd(c0, c1, c2, n7, SECP256K1_N_C_1);
+            c0 := tau0;
+            c1 := tau1;
+            c2 := tau2;
+
+            let (tav0, tav1, tav2) = muladd(c0, c1, c2, n6, SECP256K1_N_C_2);
+            c0 := tav0;
+            c1 := tav1;
+            c2 := tav2;
+
+            let (taw0, taw1, taw2) = muladd(c0, c1, c2, n5, SECP256K1_N_C_3);
+            c0 := taw0;
+            c1 := taw1;
+            c2 := taw2;
+
+            let (tax0, tax1, tax2) = sumadd(c0, c1, c2, n4);
+            c0 := tax0;
+            c1 := tax1;
+            c2 := tax2;
+
+            let (tay0, tay1, tay2, nm8) = extract(c0, c1, c2);
+            c0 := tay0;
+            c1 := tay1;
+            c2 := tay2;
+            m8 := nm8;
+
+            let (taz0, taz1, taz2) = muladd(c0, c1, c2, n7, SECP256K1_N_C_2);
+            c0 := taz0;
+            c1 := taz1;
+            c2 := taz2;
+
+            let (tba0, tba1, tba2) = muladd(c0, c1, c2, n6, SECP256K1_N_C_3);
+            c0 := tba0;
+            c1 := tba1;
+            c2 := tba2;
+
+            let (tbb0, tbb1, tbb2) = sumadd(c0, c1, c2, n5);
+            c0 := tbb0;
+            c1 := tbb1;
+            c2 := tbb2;
+
+            let (tbc0, tbc1, tbc2, nm9) = extract(c0, c1, c2);
+            c0 := tbc0;
+            c1 := tbc1;
+            c2 := tbc2;
+            m9 := nm9;
+
+            let (tbd0, tbd1, tbd2) = muladd(c0, c1, c2, n7, SECP256K1_N_C_3);
+            c0 := tbd0;
+            c1 := tbd1;
+            c2 := tbd2;
+
+            let (tbe0, tbe1, tbe2) = sumadd(c0, c1, c2, n6);
+            c0 := tbe0;
+            c1 := tbe1;
+            c2 := tbe2;
+            
+            let (tbf0, tbf1, tbf2, nm10) = extract(c0, c1, c2);
+            c0 := tbf0;
+            c1 := tbf1;
+            c2 := tbf2;
+            m10 := nm10;
+            
+            let (tbg0, tbg1, tbg2) = sumadd_fast(c0, c1, c2, n7);
+            c0 := tbg0;
+            c1 := tbg1;
+            c2 := tbg2;
+
+
+            let (tbh0, tbh1, tbh2, nm11) = extract_fast(c0, c1, c2);
+            c0 := tbh0;
+            c1 := tbh1;
+            c2 := tbh2;
+            m11 := nm11;
+
+            assert(c0 <= 1);
+
+            m12 := c0;
+
+            /* Reduce 385 bits into 258. */
+            /* p[0..8] = m[0..7] + m[8..12] * SECP256K1_N_C. */
+            c0 := m0;
+            c1 := 0;
+            c2 := 0;
+
+            let (tbi0, tbi1, tbi2) = muladd_fast(c0, c1, c2, m8, SECP256K1_N_C_0);
+            c0 := tbi0;
+            c1 := tbi1;
+            c2 := tbi2;
+
+            let (tbj0, tbj1, tbj2, np0) = extract_fast(c0, c1, c2);
+            c0 := tbj0;
+            c1 := tbj1;
+            c2 := tbj2;
+            p0 := np0;
+
+            let (tbk0, tbk1, tbk2) = sumadd_fast(c0, c1, c2, m1);
+            c0 := tbk0;
+            c1 := tbk1;
+            c2 := tbk2;
+
+            let (tbl0, tbl1, tbl2) = muladd(c0, c1, c2, m9, SECP256K1_N_C_0);
+            c0 := tbl0;
+            c1 := tbl1;
+            c2 := tbl2;
+
+            let (tbm0, tbm1, tbm2) = muladd(c0, c1, c2, m8, SECP256K1_N_C_1);
+            c0 := tbm0;
+            c1 := tbm1;
+            c2 := tbm2;
+
+            let (tbn0, tbn1, tbn2, np1) = extract(c0, c1, c2);
+            c0 := tbn0;
+            c1 := tbn1;
+            c2 := tbn2;
+            p1 := np1;
+
+            let (tbo0, tbo1, tbo2) = sumadd(c0, c1, c2, m2);
+            c0 := tbo0;
+            c1 := tbo1;
+            c2 := tbo2;
+
+            let (tbp0, tbp1, tbp2) = muladd(c0, c1, c2, m10, SECP256K1_N_C_0);
+            c0 := tbp0;
+            c1 := tbp1;
+            c2 := tbp2;
+          
+            let (tbq0, tbq1, tbq2) = muladd(c0, c1, c2, m9, SECP256K1_N_C_1);
+            c0 := tbq0;
+            c1 := tbq1;
+            c2 := tbq2;
+
+            let (tbr0, tbr1, tbr2) = muladd(c0, c1, c2, m8, SECP256K1_N_C_2);
+            c0 := tbr0;
+            c1 := tbr1;
+            c2 := tbr2;
+
+            let (tbs0, tbs1, tbs2, np2) = extract(c0, c1, c2);
+            c0 := tbs0;
+            c1 := tbs1;
+            c2 := tbs2;
+            p2 := np2;
+
+            let (tbt0, tbt1, tbt2) = sumadd(c0, c1, c2, m3);
+            c0 := tbt0;
+            c1 := tbt1;
+            c2 := tbt2;
+
+            let (tbu0, tbu1, tbu2) = muladd(c0, c1, c2, m11, SECP256K1_N_C_0);
+            c0 := tbu0;
+            c1 := tbu1;
+            c2 := tbu2;
+
+            let (tbv0, tbv1, tbv2) = muladd(c0, c1, c2, m10, SECP256K1_N_C_1);
+            c0 := tbv0;
+            c1 := tbv1;
+            c2 := tbv2;
+
+            let (tbw0, tbw1, tbw2) = muladd(c0, c1, c2, m9, SECP256K1_N_C_2);
+            c0 := tbw0;
+            c1 := tbw1;
+            c2 := tbw2;
+
+            let (tbx0, tbx1, tbx2) = muladd(c0, c1, c2, m8, SECP256K1_N_C_3);
+            c0 := tbx0;
+            c1 := tbx1;
+            c2 := tbx2;
+
+            let (tby0, tby1, tby2, np3) = extract(c0, c1, c2);
+            c0 := tby0;
+            c1 := tby1;
+            c2 := tby2;
+            p3 := np3;
+
+            let (tbz0, tbz1, tbz2) = sumadd(c0, c1, c2, m4);
+            c0 := tbz0;
+            c1 := tbz1;
+            c2 := tbz2;
+
+            let (tca0, tca1, tca2) = muladd(c0, c1, c2, m12, SECP256K1_N_C_0);
+            c0 := tca0;
+            c1 := tca1;
+            c2 := tca2;
+
+            let (tcb0, tcb1, tcb2) = muladd(c0, c1, c2, m11, SECP256K1_N_C_1);
+            c0 := tcb0;
+            c1 := tcb1;
+            c2 := tcb2;
+
+            let (tcc0, tcc1, tcc2) = muladd(c0, c1, c2, m10, SECP256K1_N_C_2);
+            c0 := tcc0;
+            c1 := tcc1;
+            c2 := tcc2;
+
+            let (tcd0, tcd1, tcd2) = muladd(c0, c1, c2, m9, SECP256K1_N_C_3);
+            c0 := tcd0;
+            c1 := tcd1;
+            c2 := tcd2;
+
+            let (tce0, tce1, tce2) = sumadd(c0, c1, c2, m8);
+            c0 := tce0;
+            c1 := tce1;
+            c2 := tce2;
+
+            let (tcf0, tcf1, tcf2, np4) = extract(c0, c1, c2);
+            c0 := tcf0;
+            c1 := tcf1;
+            c2 := tcf2;
+            p4 := np4;
+
+            let (tcg0, tcg1, tcg2) = sumadd(c0, c1, c2, m5);
+            c0 := tcg0;
+            c1 := tcg1;
+            c2 := tcg2;
+
+            let (tch0, tch1, tch2) = muladd(c0, c1, c2, m12, SECP256K1_N_C_1);
+            c0 := tch0;
+            c1 := tch1;
+            c2 := tch2;
+
+            let (tci0, tci1, tci2) = muladd(c0, c1, c2, m11, SECP256K1_N_C_2);
+            c0 := tci0;
+            c1 := tci1;
+            c2 := tci2;
+
+            let (tcj0, tcj1, tcj2) = muladd(c0, c1, c2, m10, SECP256K1_N_C_3);
+            c0 := tcj0;
+            c1 := tcj1;
+            c2 := tcj2;
+
+            let (tck0, tck1, tck2) = sumadd(c0, c1, c2, m9);
+            c0 := tck0;
+            c1 := tck1;
+            c2 := tck2;
+
+            let (tcl0, tcl1, tcl2, np5) = extract(c0, c1, c2);
+            c0 := tcl0;
+            c1 := tcl1;
+            c2 := tcl2;
+            p5 := np5;
+
+            let (tcm0, tcm1, tcm2) = sumadd(c0, c1, c2, m6);
+            c0 := tcm0;
+            c1 := tcm1;
+            c2 := tcm2;
+
+            let (tcn0, tcn1, tcn2) = muladd(c0, c1, c2, m12, SECP256K1_N_C_2);
+            c0 := tcn0;
+            c1 := tcn1;
+            c2 := tcn2;
+
+            let (tco0, tco1, tco2) = muladd(c0, c1, c2, m11, SECP256K1_N_C_3);
+            c0 := tco0;
+            c1 := tco1;
+            c2 := tco2;
+
+            let (tcp0, tcp1, tcp2) = sumadd(c0, c1, c2, m10);
+            c0 := tcp0;
+            c1 := tcp1;
+            c2 := tcp2;
+
+            let (tcq0, tcq1, tcq2, np6) = extract(c0, c1, c2);
+            c0 := tcq0;
+            c1 := tcq1;
+            c2 := tcq2;
+            p6 := np6;
+
+            let (tcr0, tcr1, tcr2) = sumadd_fast(c0, c1, c2, m7);
+            c0 := tcr0;
+            c1 := tcr1;
+            c2 := tcr2;
+
+            let (tcs0, tcs1, tcs2) = muladd_fast(c0, c1, c2, m12, SECP256K1_N_C_3);
+            c0 := tcs0;
+            c1 := tcs1;
+            c2 := tcs2;
+
+            let (tct0, tct1, tct2) = sumadd_fast(c0, c1, c2, m11);
+            c0 := tct0;
+            c1 := tct1;
+            c2 := tct2;
+
+            let (tcu0, tcu1, tcu2, np7) = extract_fast(c0, c1, c2);
+            c0 := tcu0;
+            c1 := tcu1;
+            c2 := tcu2;
+            p7 := np7;
+
+            p8 := c0 + m12;
+
+
+            assert(p8 <= 2);
+
+            
+
+            /* Reduce 258 bits into 256. */
+            /* r[0..7] = p[0..7] + p[8] * SECP256K1_N_C. */
+            c := u64(p0) + u64(SECP256K1_N_C_0) * u64(p8);
+            n[0] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p1) + u64(SECP256K1_N_C_1) * u64(p8);
+            n[1] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p2) + u64(SECP256K1_N_C_2) * u64(p8);
+            n[2] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p3) + u64(SECP256K1_N_C_3) * u64(p8);
+            n[3] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p4) + u64(p8);
+            n[4] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p5);
+            n[5] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p6);
+            n[6] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+            c += u64(p7);
+            n[7] := u64u32(c & 0xFFFFFFFF);
+            c >>= 32;
+
+            let overflow = check_overflow();
+            reduce(subtle.into(u64u8(c) | overflow);
         };
 
     };
