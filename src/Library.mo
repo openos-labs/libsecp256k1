@@ -1,14 +1,8 @@
-/// A shiny new library
+/// libsecp256k1
 ///
-/// Make it easy and fun to use your new library by including some module specific documentation here.
-/// It's always a good idea to include a minimal working example:
-///
-/// ```motoko
-/// import LibraryTemplate "mo:library-template/Library";
-///
-/// assert(LibraryTemplate.isPalindrome("anna"));
-/// assert(not LibraryTemplate.isPalindrome("christoph"));
-/// ```
+/// Pure Rust implementation of the secp256k1 curve and fast ECDSA
+/// signatures. The secp256k1 curve is used extensively in Bitcoin and
+/// Ethereum-alike cryptocurrencies.
 
 import Array "mo:base/Array";
 import Iter "mo:base/Iter";
@@ -25,7 +19,7 @@ module {
     Text.fromIter(Iter.fromArray(reversedChars));
   };
 
-  /// Checks whether the given input text is equal to itself when reversed.
+  // Checks whether the given input text is equal to itself when reversed.
   public func isPalindrome(input : Text) : Bool {
     let reversed = reverseText(input);
     input == reversed
