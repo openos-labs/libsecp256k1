@@ -940,7 +940,7 @@ module {
             c >>= 32;
 
             let overflow = check_overflow();
-            reduce(subtle.into(u64u8(c) | overflow);
+            reduce(subtle.into(u64u8(c)).bitor(overflow));
         };
 
     };
