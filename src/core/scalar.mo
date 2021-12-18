@@ -54,6 +54,18 @@ module {
             ret
         };
 
+
+        public func assign_mut(a: Scalar) {
+            n[0] := a.n[0];
+            n[1] := a.n[1];
+            n[2] := a.n[2];
+            n[3] := a.n[3];
+            n[4] := a.n[4];
+            n[5] := a.n[5];
+            n[6] := a.n[6];
+            n[7] := a.n[7];
+        };
+
         /// Clear a scalar to prevent the leak of sensitive data.
         public func clear() {
             n[0] := 0;
@@ -1225,7 +1237,7 @@ module {
             reduce(subtle.into(u64u8(c)).bitor(overflow));
         };
 
-        func mul_512(b: Scalar, l: [var Nat32]) {
+        public func mul_512(b: Scalar, l: [var Nat32]) {
             var c0: Nat32 = 0;
             var c1: Nat32 = 0;
             var c2: Nat32 = 0;
@@ -1298,7 +1310,6 @@ module {
                 c2 := _c2; 
             };
 
-
             // l[2] = extract!();
             do {
                 let (_c0, _c1, _c2, _l2) = extract(c0, c1, c2);
@@ -1309,226 +1320,1231 @@ module {
             };
 
             // muladd!(n[0], b.n[3]);
-            // let (ah0, ah1, ah2) = muladd(c0, c1, c2, n[2], b.n[0]);
-            // c0 := ah0;
-            // c1 := ah1;
-            // c2 := ah2; 
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[0], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2; 
+            };
 
             // muladd!(n[1], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2; 
+            };
 
             // muladd!(n[2], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2; 
+            };
 
             // muladd!(n[3], b.n[0]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[3] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l3) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[3] := _l3;
+            };
 
             // muladd!(n[0], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[0], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[1], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[2], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[0]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[4] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l4) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[4] := _l4;
+            };
 
             // muladd!(n[0], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[0], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[1], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[2], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[0]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[5] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l5) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[5] := _l5;
+            };
 
-            
             // muladd!(n[0], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[0], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[1], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[2], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[0]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
             
             // l[6] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l6) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[6] := _l6;
+            };
 
             // muladd!(n[0], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[0], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[1], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[2], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
             
             // muladd!(n[4], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[0]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[7] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l7) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[7] := _l7;
+            };
 
             // muladd!(n[1], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[2], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[1]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[8] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l8) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[8] := _l8;
+            };
 
             // muladd!(n[2], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[3], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[3]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[2]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[9] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l9) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[9] := _l9;
+            };
 
             // muladd!(n[3], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[4], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[3]);
-            
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[10] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l10) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[10] := _l10;
+            };
 
             // muladd!(n[4], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[5], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[4]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[11] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l11) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[11] := _l11;
+            };
 
             // muladd!(n[5], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[6], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[5]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[12] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l12) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[12] := _l12;
+            };
 
             // muladd!(n[6], b.n[7]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // muladd!(n[7], b.n[6]);
-
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[7], b.n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
 
             // l[13] = extract!();
-
+            do {
+                let (_c0, _c1, _c2, _l13) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[13] := _l13;
+            };
 
             // muladd_fast!(n[7], b.n[7]);
-
-
+            do {
+                let (_c0, _c1, _c2) = muladd_fast(c0, c1, c2, n[7], b.n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
 
             // l[14] = extract_fast!();
+            do {
+                let (_c0, _c1, _c2, _l14) = extract_fast(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[14] := _l14;
+            };
 
-
-            // debug_assert!(c1 == 0);
-
-
-            // l[15] = c0;
+            assert(c1 == 0);
+            l[15] := c0;
         };
 
+        public func sqr_512(l: [var Nat32]) {
+            var c0: Nat32 = 0;
+            var c1: Nat32 = 0;
+            var c2: Nat32 = 0;
+
+            /* l[0..15] = a[0..7]^2. */
+            // muladd_fast!(self.0[0], self.0[0]);
+            do {
+                let (_c0, _c1, _c2) = muladd_fast(c0, c1, c2, n[0], n[0]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[0] = extract_fast!();
+            do {
+                let (_c0, _c1, _c2, _l0) = extract_fast(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[0] := _l0;
+            };
+
+            // muladd2!(self.0[0], self.0[1]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[1] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l1) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[1] := _l1;
+            };
+
+            // muladd2!(self.0[0], self.0[2]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd!(self.0[1], self.0[1]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[1], n[1]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[2] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l2) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[2] := _l2;
+            };
+
+            // muladd2!(self.0[0], self.0[3]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[1], self.0[2]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+            
+            // l[3] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l3) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[3] := _l3;
+            };
+
+            // muladd2!(self.0[0], self.0[4]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[1], self.0[3]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd!(self.0[2], self.0[2]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[2], n[2]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[4] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l4) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[4] := _l4;
+            };
+
+            // muladd2!(self.0[0], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[1], self.0[4]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[2], self.0[3]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[2], n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[5] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l5) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[5] := _l5;
+            };
+
+            // muladd2!(self.0[0], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[1], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[2], self.0[4]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[2], n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd!(self.0[3], self.0[3]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[3], n[3]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[6] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l6) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[6] := _l6;
+            };
+
+            // muladd2!(self.0[0], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[0], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[1], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+            
+            // muladd2!(self.0[2], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[2], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[3], self.0[4]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[3], n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // l[7] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l7) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[7] := _l7;
+            };
+
+            // muladd2!(self.0[1], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[1], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[2], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[2], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd2!(self.0[3], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[3], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;                 
+            };
+
+            // muladd!(self.0[4], self.0[4]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[4], n[4]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[8] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l8) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[8] := _l8;
+            };
+            
+            // muladd2!(self.0[2], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[2], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd2!(self.0[3], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[3], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd2!(self.0[4], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[4], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[9] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l9) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[9] := _l9;
+            };
+
+            // muladd2!(self.0[3], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[3], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd2!(self.0[4], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[4], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd!(self.0[5], self.0[5]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[5], n[5]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[10] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l10) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[10] := _l10;
+            };
+
+            // muladd2!(self.0[4], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[4], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd2!(self.0[5], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[5], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[11] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l11) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[11] := _l11;
+            };
+
+            // muladd2!(self.0[5], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[5], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // muladd!(self.0[6], self.0[6]);
+            do {
+                let (_c0, _c1, _c2) = muladd(c0, c1, c2, n[6], n[6]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[12] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l12) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[12] := _l12;
+            };
+
+            // muladd2!(self.0[6], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd2(c0, c1, c2, n[6], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[13] = extract!();
+            do {
+                let (_c0, _c1, _c2, _l13) = extract(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[13] := _l13;
+            };
+
+            // muladd_fast!(self.0[7], self.0[7]);
+            do {
+                let (_c0, _c1, _c2) = muladd_fast(c0, c1, c2, n[7], n[7]);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+            };
+
+            // l[14] = extract_fast!();
+            do {
+                let (_c0, _c1, _c2, _l14) = extract_fast(c0, c1, c2);
+                c0 := _c0;
+                c1 := _c1;
+                c2 := _c2;
+                l[14] := _l14;
+            };
+
+            assert(c1 == 0);
+            l[15] := c0;
+        };
+
+        public func mul_in_place(a: Scalar, b: Scalar) {
+            let l = Array.init<Nat32>(16, 0);
+            a.mul_512(b, l);
+            reduce_512(Array.freeze<Nat32>(l));
+        };
+
+        /// Shift a scalar right by some amount strictly between 0 and 16,
+        /// returning the low bits that were shifted off.
+        public func shr_int(_n: Nat32): Nat32 {
+            var ret: Nat32 = 0;
+            ret := n[0] & ((1 << _n) - 1);
+            n[0] := (n[0] >> _n) + (n[1] << (32 - _n));
+            n[1] := (n[1] >> _n) + (n[2] << (32 - _n));
+            n[2] := (n[2] >> _n) + (n[3] << (32 - _n));
+            n[3] := (n[3] >> _n) + (n[4] << (32 - _n));
+            n[4] := (n[4] >> _n) + (n[5] << (32 - _n));
+            n[5] := (n[5] >> _n) + (n[6] << (32 - _n));
+            n[6] := (n[6] >> _n) + (n[7] << (32 - _n));
+            n[7] >>= _n;
+            ret
+        };
+
+        public func sqr_in_place(a: Scalar) {
+            let l = Array.init<Nat32>(16, 0);
+            a.sqr_512(l);
+            reduce_512(Array.freeze<Nat32>(l));
+        };
+
+        public func sqr(): Scalar {
+            let ret = Scalar();
+            ret.sqr_in_place(self());
+            ret
+        };
+
+        public func inv_in_place(x: Scalar) {
+            let u2 = x.sqr();
+            let x2 = u2.mul(x);
+            let u5 = u2.mul(x2);
+            let x3 = u5.mul(u2);
+            let u9 = x3.mul(u2);
+            let u11 = u9.mul(u2);
+            let u13 = u11.mul(u2);
+
+            var x6 = u13.sqr();
+            x6 := x6.sqr();
+            x6 := x6.mul(u11);
+
+            var x8 = x6.sqr();
+            x8 := x8.sqr();
+            x8 := x8.mul(x2);
+
+            var x14 = x8.sqr();
+            for (_ in Iter.range(0, 4)) {
+                x14 := x14.sqr();
+            };
+            x14 := x14.mul(x6);
+
+            var x28 = x14.sqr();
+            for (_ in Iter.range(0, 12)) {
+                x28 := x28.sqr();
+            };
+            x28 := x28.mul(x14);
+
+            var x56 = x28.sqr();
+            for (_ in Iter.range(0, 26)) {
+                x56 := x56.sqr();
+            };
+            x56 := x56.mul(x28);
+
+            var x112 = x56.sqr();
+            for (_ in Iter.range(0,54)) {
+                x112 := x112.sqr();
+            };
+            x112 := x112.mul(x56);
+
+            var x126 = x112.sqr();
+            for (_ in Iter.range(0, 12)) {
+                x126 := x126.sqr();
+            };
+            x126 := x126.mul(x14);
+
+            var t = x126;
+            for (_ in Iter.range(0, 2)) {
+                t := t.sqr();
+            };
+            t := t.mul(u5);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(u5);
+            for (_ in Iter.range(0, 4)) {
+                t := t.sqr();
+            };
+            t := t.mul(u11);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(u11);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 4)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 5)) {
+                t := t.sqr();
+            };
+            t := t.mul(u13);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(u5);
+            for (_ in Iter.range(0, 2)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 4)) {
+                t := t.sqr();
+            };
+            t := t.mul(u9);
+            for (_ in Iter.range(0, 5)) {
+                t := t.sqr();
+            };
+            t := t.mul(u5);
+            for (_ in Iter.range(0, 9)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(x3);
+            for (_ in Iter.range(0, 8)) {
+                t := t.sqr();
+            };
+            t := t.mul(x8);
+            for (_ in Iter.range(0, 4)) {
+                t := t.sqr();
+            };
+            t := t.mul(u9);
+            for (_ in Iter.range(0, 5)) {
+                t := t.sqr();
+            };
+            t := t.mul(u11);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(u13);
+            for (_ in Iter.range(0, 4)) {
+                t := t.sqr();
+            };
+            t := t.mul(x2);
+            for (_ in Iter.range(0, 5)) {
+                t := t.sqr();
+            };
+            t := t.mul(u13);
+            for (_ in Iter.range(0, 9)) {
+                t := t.sqr();
+            };
+            t := t.mul(u13);
+            for (_ in Iter.range(0, 3)) {
+                t := t.sqr();
+            };
+            t := t.mul(u9);
+            for (_ in Iter.range(0, 5)) {
+                t := t.sqr();
+            };
+            t := t.mul(x);
+            for (_ in Iter.range(0, 7)) {
+                t := t.sqr();
+            };
+            assign_mut(t.mul(x6));
+        };
+
+        public func add(other: Scalar): Scalar {
+            add_assign(other);
+            self()
+        };
+
+        public func add_assign(other: Scalar) {
+            var t: Nat64 = 0;
+
+            for (i in Iter.range(0, 7)) {
+                t += u64(n[i]) + u64(other.n[i]);
+                n[i] := u64u32(t & 0xFFFFFFFF);
+                t >>= 32;
+            };
+
+            let overflow = check_overflow();
+            reduce(subtle.into(u64u8(t)).bitor(overflow));
+        };
+
+        public func mul(other: Scalar): Scalar {
+            let ret = Scalar();
+            ret.mul_in_place(self(), other);
+            ret
+        };
+
+        public func mul_assign(other: Scalar) {
+            mul_in_place(self(), other);
+        };
+
+        public func neg_mut(): Scalar {
+            cond_neg_assign(subtle.into(1));
+            self()
+        };
+
+        public func neg_unmut(): Scalar {
+            let value = self();
+            value.neg_mut()
+        };
 
     };
 
