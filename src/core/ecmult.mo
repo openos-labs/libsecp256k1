@@ -57,9 +57,11 @@ module {
         //  just use a.pre_g := new_value;
 
         /// Inspect raw values of `ECMultContext`.
+        //  inspect_raw()
         //  just use a.pre_g
 
         /// Generate a new `ECMultContext` on the heap. Note that this function is expensive.
+        //  new_boxed()
 
 
     };
@@ -146,9 +148,21 @@ module {
         public var prec: [var [var AffineStorage]] = Array.init<[var AffineStorage]>(64, Array.init<AffineStorage>(16, group.AffineStorage()));
         public var blind: Scalar = scalar.Scalar();
         public var initial: Jacobian = group.Jacobian();
+
+
+
     };
 
-    // public func 
+    /// Create a new `ECMultGenContext` from raw values.
+    ///
+    /// # Safety
+    /// The function is unsafe because incorrect value of `pre_g` can lead to
+    /// crypto logic failure. You most likely do not want to use this function,
+    /// but `ECMultGenContext::new_boxed`.
+    public func new_from_raw(prec: [var [var AffineStorage]]): ECMultGenContext {
+
+    };
+
 
 
 
